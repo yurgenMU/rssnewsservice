@@ -1,4 +1,4 @@
-package ru.otus.spring.rssnewsservice.domain;
+package ru.otus.spring.rssnewsservice.domain.feed;
 
 import javax.persistence.*;
 
@@ -34,5 +34,20 @@ public class FeedData {
 
     public String getLink() {
         return link;
+    }
+
+    public FeedData setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public FeedData setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public FeedData setLink(String link) {
+        this.link = link;
+        return this;
     }
 }

@@ -2,7 +2,7 @@ package ru.otus.spring.rssnewsservice.domain.user;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import ru.otus.spring.rssnewsservice.domain.FeedData;
+import ru.otus.spring.rssnewsservice.domain.feed.FeedData;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -45,23 +45,53 @@ public class User {
         return id;
     }
 
+    public User setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public String getUsername() {
         return username;
+    }
+
+    public User setUsername(String username) {
+        this.username = username;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
     public Date getDate() {
         return date;
+    }
+
+    public User setDate(Date date) {
+        this.date = date;
+        return this;
     }
 
     public Set<Authority> getAuthorities() {
         return authorities;
     }
 
+    public User setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+        return this;
+    }
+
     public List<FeedData> getUserFeeds() {
         return userFeeds;
+    }
+
+    public User setUserFeeds(List<FeedData> userFeeds) {
+        this.userFeeds = userFeeds;
+        return this;
     }
 }

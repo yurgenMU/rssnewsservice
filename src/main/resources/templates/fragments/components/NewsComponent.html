@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="news-component">
+    <script type="text/x-template" id="news-template">
+        <div>
+
+            <div v-for="feed in availableFeeds">
+                <img :src="feed.imageSrc">
+                <span>{{feed.name}}</span>
+                <div>{{feed.description}}</div>
+                <div v-for="newsEntry in feed.entries">
+                    <span>{{newsEntry.name}}</span>
+                    <div>{{newsEntry.description}}</div>
+                    <a :href="newsEntry.link"></a>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>
+</html>

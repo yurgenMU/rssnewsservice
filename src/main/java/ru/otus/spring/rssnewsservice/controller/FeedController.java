@@ -3,7 +3,7 @@ package ru.otus.spring.rssnewsservice.controller;
 import com.sun.syndication.io.FeedException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.otus.spring.rssnewsservice.domain.FeedDto;
+import ru.otus.spring.rssnewsservice.domain.feed.FeedDto;
 import ru.otus.spring.rssnewsservice.service.NewsService;
 
 import java.io.IOException;
@@ -19,12 +19,12 @@ public class FeedController {
         this.newsService = newsService;
     }
 
-    @GetMapping("/ping")
+    @GetMapping("/news/all")
     public List<FeedDto> getFeed() throws IOException, FeedException {
         return newsService.getAll();
     }
 
-    @GetMapping("/feed")
+    @GetMapping("/news/custom")
     public List<FeedDto> getFeedForUser(Principal principal) throws IOException, FeedException {
         String username = principal.getName();
         return newsService.getNewsForUser(username);

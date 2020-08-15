@@ -2,9 +2,10 @@ package ru.otus.spring.rssnewsservice.service;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.otus.spring.rssnewsservice.domain.FeedData;
-import ru.otus.spring.rssnewsservice.domain.FeedDto;
+import ru.otus.spring.rssnewsservice.domain.feed.FeedData;
+import ru.otus.spring.rssnewsservice.domain.feed.FeedDto;
 import ru.otus.spring.rssnewsservice.domain.user.User;
+import ru.otus.spring.rssnewsservice.exception.FeedDataNotFoundException;
 import ru.otus.spring.rssnewsservice.repository.FeedDataRepository;
 import ru.otus.spring.rssnewsservice.repository.UserRepository;
 
@@ -28,22 +29,24 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public FeedData getFeedById(Long id) {
-        return null;
+        return feedDataRepository.findById(id)
+                .orElseThrow(() -> new FeedDataNotFoundException("Feed data with this identifier not found"));
     }
 
     @Override
     public void addFeedData(String name, String link) {
-
+        feedDataRepository.save(new FeedData(name, link));
     }
 
     @Override
     public void updateFeedData(Long id, String name, String link) {
-
+        feedDataRepository.findById(id)
+                .ifPresent(feedDataFound -> feedDataRepository.save(new FeedData(name, link).setId(feedDataFound.getId())));
     }
 
     @Override
     public void removeFeedData(Long id) {
-
+        feedDataRepository.deleteById(id);
     }
 
     @Override

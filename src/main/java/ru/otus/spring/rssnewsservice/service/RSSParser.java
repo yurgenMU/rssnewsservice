@@ -6,7 +6,7 @@ import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 import org.springframework.stereotype.Component;
-import ru.otus.spring.rssnewsservice.domain.FeedDto;
+import ru.otus.spring.rssnewsservice.domain.feed.FeedDto;
 import ru.otus.spring.rssnewsservice.domain.NewsEntryDto;
 import ru.otus.spring.rssnewsservice.exception.RSSFeedRetrievalException;
 

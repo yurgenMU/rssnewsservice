@@ -1,7 +1,7 @@
 package ru.otus.spring.rssnewsservice.service;
 
-import ru.otus.spring.rssnewsservice.domain.FeedData;
-import ru.otus.spring.rssnewsservice.domain.FeedDto;
+import ru.otus.spring.rssnewsservice.domain.feed.FeedData;
+import ru.otus.spring.rssnewsservice.domain.feed.FeedDto;
 
 import java.util.List;
 

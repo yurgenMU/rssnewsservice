@@ -9,11 +9,11 @@ import ru.otus.spring.rssnewsservice.domain.user.UserPrincipal;
 import ru.otus.spring.rssnewsservice.repository.UserRepository;
 
 @Service
-public class LibraryUserDetailsService implements UserDetailsService {
+public class NewsUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public LibraryUserDetailsService(UserRepository userRepository) {
+    public NewsUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
