@@ -1,14 +1,19 @@
 package ru.otus.spring.rssnewsservice.service;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.otus.spring.rssnewsservice.domain.feed.FeedData;
 import ru.otus.spring.rssnewsservice.domain.user.Authority;
 import ru.otus.spring.rssnewsservice.domain.user.AuthorityType;
 import ru.otus.spring.rssnewsservice.domain.user.User;
+import ru.otus.spring.rssnewsservice.exception.FeedDataNotFoundException;
+import ru.otus.spring.rssnewsservice.repository.FeedDataRepository;
 import ru.otus.spring.rssnewsservice.repository.UserRepository;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 
@@ -16,12 +21,14 @@ import static java.util.Objects.nonNull;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final FeedDataRepository feedDataRepository;
 
     private final PasswordEncoder passwordEncoder;
 
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, FeedDataRepository feedDataRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.feedDataRepository = feedDataRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -31,6 +38,23 @@ public class UserServiceImpl implements UserService {
                 .setUsername(login)
                 .setPassword(passwordEncoder.encode(password))
                 .setAuthorities(Set.of(new Authority(AuthorityType.USER))));
+    }
+
+    @Override
+    public User updateUser(String login, List<Long> feeds) {
+        List<FeedData> feedsFound = feeds.stream()
+                .map(feedDataRepository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get).collect(Collectors.toList());
+
+        User userFound = userRepository.findByUsername(login)
+                .orElseThrow(() -> new FeedDataNotFoundException("User with this identifier not found"));
+
+        return userRepository.save(new User().setId(userFound.getId())
+                .setUsername(userFound.getUsername())
+                .setPassword(userFound.getPassword())
+                .setAuthorities(userFound.getAuthorities())
+                .setUserFeeds(feedsFound));
     }
 
     @Override

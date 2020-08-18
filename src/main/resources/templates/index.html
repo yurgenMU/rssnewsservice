@@ -9,19 +9,21 @@
 <div th:insert="fragments/components/RegistrationComponent::registration-component"></div>
 <div th:insert="fragments/components/LoginComponent::login-component"></div>
 <div th:insert="fragments/components/NewsComponent::news-component"></div>
+<div th:insert="fragments/components/AccordionComponent::accordion-component"></div>
+<div th:insert="fragments/components/EditUserFeedsComponent::edit-user-feeds"></div>
 <div id="news-app">
     <div class="news-service-header news-service-header_black">
         <div class="news-service-header__items">
             <div class="news-service-header__navigation-tabs">
-                <div v-if="isLoggedIn" class="news-service-header__item">
-                    <!--                <router-link class="news-service-header__title" to="/search">Search</router-link>-->
+                <div class="news-service-header__item">
+                                    <router-link class="news-service-header__title" to="/news">News</router-link>
                 </div>
                 <div v-if="isLoggedIn" class="news-service-header__item">
-                    <!--                <router-link class="news-service-header__title" to="/imageSearch">Image Search</router-link>-->
+                    <router-link class="news-service-header__title" to="/customize">Customize</router-link>
                 </div>
-                <div v-if="isLoggedIn && hasRole('MAUI', 'MAUI test role')" class="news-service-header__item">
-                    <!--                <router-link class="news-service-header__title" to="/secured/imageSearch">Secured Image Search</router-link>-->
-                </div>
+<!--                <div v-if="isLoggedIn && hasRole('MAUI', 'MAUI test role')" class="news-service-header__item">-->
+
+<!--                </div>-->
             </div>
             <div class="news-service-header__menu-tabs">
                 <div v-if="!isLoggedIn" class="news-service-header__item">
@@ -32,8 +34,8 @@
                 </div>
                 <div class="user-section">
                     <div v-if="isLoggedIn" class="news-service-header__item">
-                        <!--                    <user-info :source-url="'https://maui-dev-gateway.wcms-nonprod.c.eu-de-2.cloud.sap/oauth/logout'"-->
-                        <!--                    ></user-info>-->
+                        <span>{{username}}</span>
+                        <button class="news-service-header__btn" @click="logout">logout</button>
                     </div>
                 </div>
             </div>

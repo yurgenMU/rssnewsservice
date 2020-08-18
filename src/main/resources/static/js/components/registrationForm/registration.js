@@ -28,8 +28,8 @@ Vue.component("RegistrationComponent", {
                 axios.post(url, credentials, {withCredentials: true})
                     .then((response) => {
                         if (response.status === 200) {
-                            localStorage.setItem(btoa('jwtToken'), JSON.stringify(response.data));
-                            that.$store.dispatch("login");
+                            localStorage.setItem(btoa('jwtToken'), btoa(JSON.stringify(response.data)));
+                            that.$store.dispatch("login", login);
                             this.$router.push(this.$route.query.redirect || '/')
                         }
                     })

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div th:fragment="edit-user-feeds">
+    <script type="text/x-template" id="edit-user-feeds-template">
+        <div class="section">
+            <span class="section_label">News feeds:</span>
+            <div class="feeds-container">
+                <div class="feeds-column">
+                    <div class="services-filter__header services-filter__header__wide">
+                        <h5 class="services__headline">Chosen feeds:</h5>
+                    </div>
+                    <div class="feeds-list">
+                        <div v-for="feed in selectedFeeds" class="feed-item"
+                             @click="feed.selected = !feed.selected"
+                             :class="{'item_selected': feed.selected}">{{ feed.origin.name }}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="feeds-buttons-container">
+                    <button type="button" class="btn " @click="removeFromSelected">&#8250;</button>
+                    <button type="button" class="btn" @click="addToSelected">&#8249;</button>
+                </div>
+                <div class="feeds-column">
+                    <div class="">
+                        <h5 class="">Not chosen feeds:</h5>
+                    </div>
+                    <div class="feeds-list">
+                        <div v-for="feed in unselectedFeeds" class="feed-item"
+                             @click="feed.selected = !feed.selected"
+                             :class="{'item_selected': feed.selected}">{{ feed.origin.name }}
+                        </div>
+                    </div>
+                </div>
+
+                <button @click="saveChanges">Save</button>
+            </div>
+
+        </div>
+    </script>
+
+</div>
+</body>
+</html>

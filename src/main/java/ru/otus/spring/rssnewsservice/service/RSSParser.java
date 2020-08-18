@@ -30,7 +30,7 @@ public class RSSParser {
                 .setName(feed.getTitle())
                 .setDescription(feed.getDescription())
                 .setEntries(newsEntries)
-                .setImageSrc(feed.getImage().getLink());
+                .setImageSrc(feed.getImage().getUrl());
 
     }
 

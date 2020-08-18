@@ -1,45 +1,31 @@
 Vue.component("NewsComponent", {
     template: "#news-template",
 
-    props: {
-        availableFeeds: Array
+    props: {},
+
+
+    data: function () {
+        return {
+            open: false,
+            chosenFeeds: [],
+            allFeeds: []
+        }
     },
 
-    // data: function () {
-    //     return {
-    //         login: "",
-    //         password: "",
-    //         userExists: false
-    //     }
-    // },
-    //
-    // methods: {
-    //
-    //     register: function () {
-    //         const login = this.login;
-    //         const password = this.password;
-    //         const url = this.sourceUrl;
-    //         let that = this;
-    //         if (url && url.length !== 0 && login.length !== 0 && password.length !== 0) {
-    //             const credentials = {
-    //                 login: login,
-    //                 password: btoa(password)
-    //             };
-    //             axios.post(url, credentials, {withCredentials: true})
-    //                 .then((response) => {
-    //                     if (response.status === 200) {
-    //                         localStorage.setItem(btoa('jwtToken'), JSON.stringify(response.data));
-    //                         that.$store.dispatch("login");
-    //                         this.$router.push(this.$route.query.redirect || '/')
-    //                     }
-    //                 })
-    //                 .catch(error => {
-    //                     console.log(error.response);
-    //                     if (error.response.status === 400) {
-    //                         that.userExists = true;
-    //                     }
-    //                 });
-    //         }
-    //     }
-    // }
-})
+    created: function () {
+        this.$root.loadFeeds(this);
+    },
+
+
+    methods: {
+        toggle: function () {
+            this.open = !this.open;
+        },
+
+        afterFeedsLoad: function (chosenFeeds) {
+            this.chosenFeeds = chosenFeeds;
+        }
+    },
+
+
+});

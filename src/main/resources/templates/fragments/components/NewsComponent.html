@@ -2,17 +2,31 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="news-component">
     <script type="text/x-template" id="news-template">
-        <div>
+        <div class="news-service-feed__list">
 
-            <div v-for="feed in availableFeeds">
-                <img :src="feed.imageSrc">
-                <span>{{feed.name}}</span>
-                <div>{{feed.description}}</div>
-                <div v-for="newsEntry in feed.entries">
-                    <span>{{newsEntry.name}}</span>
-                    <div>{{newsEntry.description}}</div>
-                    <a :href="newsEntry.link"></a>
-                </div>
+            <div v-for="feed in chosenFeeds" class="news-service-feed">
+                <accordion :header-class="'navigation-section__header'">
+                    <div slot="acc-trigger">
+                        <span @click="toggle"><i class="fa fa-angle-down fa-3x" :class="{'fa-rotate-270' : !open}"></i></span>
+                    </div>
+                    <div slot="acc-header">
+                        <div>
+                            <img class="news-service-feed__image" :src="feed.imageSrc">
+                            <span class="news-service-feed__title">{{feed.name}}</span>
+                            <div class="news-service-feed__description">{{feed.description}}</div>
+                        </div>
+
+                    </div>
+                    <div slot="acc-body">
+                        <div class="news-service-feed__content">
+                            <div class="news-service-feed__entry" v-for="newsEntry in feed.entries">
+                                <span class="news-service-feed__entry-title">{{newsEntry.title}}</span>
+                                <div class="news-service-feed__entry-description">{{newsEntry.description}}</div>
+                                <a :href="newsEntry.link"></a>
+                            </div>
+                        </div>
+                    </div>
+                </accordion>
             </div>
         </div>
     </script>

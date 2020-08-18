@@ -6,42 +6,15 @@ let jwtTokenName = btoa('jwtToken');
 
 let utils = Window.SERVICE_UTILS;
 
-// function checkLogin() {
-//     const jwtObject = utils.getJwtObject();
-//     if (jwtObject) {
-//         let config = {
-//             headers: {
-//                 Authorization: 'Bearer ' + jwtObject.accessToken
-//             },
-//             withCredentials: true
-//         };
-//         store.dispatch("showSpinner");
-//         axios.get(host + '/users/getUser', config)
-//             .then(response => {
-//                 if (response.status === 200) {
-//                     utils.setRefreshTimeout(jwtObject, host, jwtTokenName, store);
-//                     store.dispatch('login', response.data);
-//                     router.push(redirect || '/');
-//                     store.dispatch("hideSpinner");
-//                 }
-//             })
-//             .catch(error => {
-//                 if (error.response.status === 401) {
-//                     utils.refreshToken(host, {
-//                         headers: {
-//                             Authorization: 'Bearer ' + jwtObject.refreshToken
-//                         },
-//                         withCredentials: true
-//                     }, jwtTokenName, store);
-//                 }
-//                 console.log(error.response);
-//                 store.dispatch('processError');
-//                 store.dispatch("hideSpinner");
-//             });
-//     }
-// }
+
+
+function checkLogin() {
+    if (localStorage.getItem(btoa('jwtToken'))) {
+        store.dispatch("login", Window.SERVICE_UTILS.getUsername());
+    }
+}
 //
-// checkLogin();
+checkLogin();
 
 
 const LoginComponent = {
@@ -64,11 +37,17 @@ const RegistrationComponent = {
 
 const NewsComponent = {
 
-    template: '<div class="login-example__container">    ' +
+    template: '<div class="news__container">    ' +
         '    <news-component\n' +
-        '            :source-url="\'/register\'"\n' +
         '            >\n' +
         '    </news-component></div>'
+};
+
+const EditNewsListComponent = {
+
+    template: '<div class="news__container">    ' +
+        '    <edit-user-feeds-component\>\n' +
+        '    </edit-user-feeds-component></div>'
 };
 
 let redirect;
@@ -76,24 +55,27 @@ let router = new VueRouter({
 
 
     routes: [
-        // {
-        //     path: '/search', component: SearchComponent, meta: {
-        //         requiresAuth: true
-        //     }
-        // },
-        // {
-        //     path: '/imageSearch', component: ImageSearchComponent, meta: {
-        //         requiresAuth: true
-        //     }
-        // },
-        // {
-        //     path: '/secured/imageSearch', component: SecuredImageSearchComponent, meta: {
-        //         requiresAuth: true,
-        //         hasRole: ["MAUI test role", "MAUI admin role"]
-        //     }
-        // },
-        {path: '/login', component: LoginComponent},
-        {path: '/registration', component: RegistrationComponent},
+
+        {
+            path: '/news', component: NewsComponent, meta: {
+                requiresAuth: false
+            }
+        },
+        {
+            path: '/customize', component: EditNewsListComponent, meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/registration', component: RegistrationComponent, meta: {
+                requiresAuth: false
+            }
+        },
+        {
+            path: '/login', component: LoginComponent, meta: {
+                requiresAuth: false
+            }
+        },
     ]
 });
 
@@ -109,29 +91,11 @@ router.beforeEach((to, from, next) => {
             })
         }
     }
-    if (to.matched.some(record => record.meta.hasRole) && store.getters.getUser) {
-        redirect = to.fullPath !== '/' ? to : undefined;
-        const roles = to.matched.map(record => record.meta.hasRole[0]);
-        isRedirectAllowed = isHasRole(roles, store.getters.getUser.roles);
-    }
+
     if (isRedirectAllowed) {
         next()
     }
 });
-
-function isHasRole(sourceRoles, userSourceRolesMap) {
-    if (!userSourceRolesMap) {
-        return false;
-    }
-
-    let userRoles = userSourceRolesMap['MAUI'];
-    if (!userRoles) {
-        return false;
-    }
-    userRoles = userRoles.map(e => e.name);
-
-    return sourceRoles.some(sourceRole => userRoles.includes(sourceRole));
-}
 
 Vue.prototype.router = router;
 

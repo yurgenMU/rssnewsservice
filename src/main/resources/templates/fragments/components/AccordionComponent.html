@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="accordion-component">
+    <script type="text/x-template" id="accordion-template">
+        <div class="accordion_container" :class="open ? 'active' : 'collapsed'">
+            <div class="accordion_trigger" @click="toggle()">
+                <slot name="acc-trigger"></slot>
+            </div>
+            <slot name="acc-header"></slot>
+            <transition name="collapse">
+                <div class="accordion_body" v-show="open" :style="style">
+                    <slot name="acc-body"></slot>
+                </div>
+            </transition>
+            <div class="accordion_footer">
+                <slot name="acc-footer"></slot>
+            </div>
+        </div>
+    </script>
+</div>
+</html>

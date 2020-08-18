@@ -24,3 +24,5 @@ INSERT INTO rss_service.users_feeds
 VALUES (1, 2);
 INSERT INTO rss_service.users_feeds
 VALUES (2, 2);
+INSERT INTO rss_service.users_feeds
+VALUES (5, 2);

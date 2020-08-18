@@ -2,7 +2,8 @@ Vue.prototype.store = new Vuex.Store({
     state: {
         loggedIn: false,
         user: undefined,
-        showSpinner: false
+        showSpinner: false,
+
     },
     mutations: {
 
@@ -49,8 +50,7 @@ Vue.prototype.store = new Vuex.Store({
 
         hideSpinner({commit}) {
             commit('hide_spinner');
-        }
-
+        },
 
     },
 
@@ -65,6 +65,14 @@ Vue.prototype.store = new Vuex.Store({
 
         showSpinner(state) {
             return state.showSpinner;
+        },
+
+        getChosenFeeds (state) {
+            return state.chosenFeeds;
+        },
+
+        getAllFeeds (state) {
+            return state.allFeeds;
         }
     }
 })

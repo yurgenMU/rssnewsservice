@@ -28,27 +28,9 @@ Vue.component("LoginComponent", {
                 axios.post(url, credentials, {withCredentials: true})
                     .then((response) => {
                         if (response.status === 200) {
-                            localStorage.setItem(btoa('jwtToken'), JSON.stringify(response.data));
+                            localStorage.setItem(btoa('jwtToken'), btoa(JSON.stringify(response.data)));
 
-                            let config = {
-                                headers: {
-                                    Authorization: 'Bearer ' + response.data.accessToken
-                                },
-                                withCredentials: true
-                            };
-
-                            // axios.get('https://maui-dev-gateway.wcms-nonprod.c.eu-de-2.cloud.sap' + '/users/getUser', config)
-                            //     .then(response => {
-                            //         if (response.status === 200) {
-                            //             that.$store.dispatch("login", response.data);
-                            //             localStorage.setItem(btoa('login'), btoa(response.data.username));
-                            //         }
-                            //     })
-                            //     .catch(error => {
-                            //         that.$store.dispatch('processError');
-                            //         that.$store.dispatch("hideSpinner");
-                            //     });
-
+                            that.$store.dispatch('login', login);
                             this.$router.push(this.$route.query.redirect || '/')
                         }
                     })
