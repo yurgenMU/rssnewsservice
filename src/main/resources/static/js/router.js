@@ -1,5 +1,3 @@
-let host = 'https://maui-dev-gateway.wcms-nonprod.c.eu-de-2.cloud.sap';
-
 let store = Vue.prototype.store;
 
 let jwtTokenName = btoa('jwtToken');
@@ -50,6 +48,13 @@ const EditNewsListComponent = {
         '    </edit-user-feeds-component></div>'
 };
 
+const FeedManagerComponent = {
+
+    template: '<div class="news__container">    ' +
+        '    <feed-manager-component\>\n' +
+        '    </feed-manager-component></div>'
+};
+
 let redirect;
 let router = new VueRouter({
 
@@ -63,6 +68,11 @@ let router = new VueRouter({
         },
         {
             path: '/customize', component: EditNewsListComponent, meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/manageFeeds', component: FeedManagerComponent, meta: {
                 requiresAuth: true
             }
         },

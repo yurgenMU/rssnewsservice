@@ -67,7 +67,7 @@ public class UserController {
         return getResponseEntityForSuccess(login);
     }
 
-    @PostMapping("/news/editFeed")
+    @PostMapping("/news/editUserFeeds")
     public ResponseEntity editFeedForUser(Principal principal, @RequestBody List<FeedDto> feeds) throws IOException, FeedException {
 
         String name = principal.getName();

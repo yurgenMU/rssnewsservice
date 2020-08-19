@@ -111,11 +111,10 @@ Vue.component("EditUserFeedsComponent", {
             };
             let that = this;
             let feeds = that.selectedFeeds.map(feed => feed.origin);
-            axios.post('/news/editFeed', feeds, config)
+            axios.post('/news/editUserFeeds', feeds, config)
                 .then(response => {
                     if (response.status === 200) {
                         that.chosenFeeds = that.selectedFeeds.length === 0 ? that.allFeeds : that.selectedFeeds;
-                        that.$store.dispatch('setChosenFeeds', that.chosenFeeds);
                     }
                 })
                 .catch(error => {

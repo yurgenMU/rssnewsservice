@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="technical-feed">
+    <script type="text/x-template" id="technical-feed-template">
+        <div>
+            <img class="news-service-feed__image" :src="feed.imageSrc">
+            <span class="news-service-feed__title">{{feed.name}}</span>
+            <div class="news-service-feed__description">{{feed.description}}</div>
+            <edit-feed-component :source-feed.sync="feed"></edit-feed-component>
+            <button @click="deleteFeed">Delete</button>
+        </div>
+</script>
+</div>
+</html>

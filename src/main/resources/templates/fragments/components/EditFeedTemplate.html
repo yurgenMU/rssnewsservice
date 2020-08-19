@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="edit-feed">
+    <script type="text/x-template" id="edit-feed-template">
+        <div>
+            <modal-dialog ref="modalDialog">
+
+                        <span slot="dialog-button">
+                            <button class="btn">Edit</button>
+                        </span>
+                <h4 slot="dialog-header" class="modal-window__title">Edit News Feed</h4>
+                <div slot="dialog-body" class="modal-window__content">
+                    Name : <input type="text" v-model="name">
+                    Link : <input type="text" v-model="link">
+
+                </div>
+                <div slot="dialog-footer">
+                    <button class="btn btn_stroke btn_outline-grey" @click="closeModal">Cancel</button>
+                    <button
+                            @click="saveChanges">Save
+                    </button>
+                </div>
+            </modal-dialog>
+        </div>
+    </script>
+</div>
+</html>

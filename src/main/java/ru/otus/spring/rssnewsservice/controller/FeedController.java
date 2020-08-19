@@ -1,9 +1,10 @@
 package ru.otus.spring.rssnewsservice.controller;
 
+import com.sun.syndication.feed.atom.Feed;
 import com.sun.syndication.io.FeedException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import ru.otus.spring.rssnewsservice.domain.feed.FeedData;
 import ru.otus.spring.rssnewsservice.domain.feed.FeedDto;
 import ru.otus.spring.rssnewsservice.service.NewsService;
 
@@ -23,7 +24,7 @@ public class FeedController {
     }
 
     @GetMapping("/news/all")
-    public List<FeedDto> getFeed() throws IOException, FeedException {
+    public List<FeedDto> getAllFeeds()  {
         return newsService.getAll();
     }
 
@@ -36,4 +37,25 @@ public class FeedController {
         return newsService.getNewsForUser(username);
     }
 
+    @PostMapping("/news/addFeed")
+    public FeedData addFeed(@RequestBody FeedData feedData) {
+        return newsService.addFeedData(feedData.getName(), feedData.getLink());
+    }
+
+    @PostMapping("/news/editFeed")
+    public ResponseEntity editFeed(@RequestBody FeedData feedData) {
+        newsService.updateFeedData(feedData.getId(), feedData.getName(), feedData.getLink());
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/news/removeFeed/{feedId}")
+    public ResponseEntity deleteFeed(@PathVariable ("feedId") Long feedId) {
+        newsService.removeFeedData(feedId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/news/allFeeds")
+    public List<FeedData> getTechnicalFeeds() throws IOException, FeedException {
+        return newsService.getAllTechnicalFeeds();
+    }
 }

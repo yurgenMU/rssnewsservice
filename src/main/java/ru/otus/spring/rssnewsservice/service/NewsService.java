@@ -9,7 +9,7 @@ public interface NewsService {
 
     FeedData getFeedById(Long id);
 
-    void addFeedData(String name, String link);
+    FeedData addFeedData(String name, String link);
 
     void updateFeedData(Long id, String name, String link);
 
@@ -18,4 +18,6 @@ public interface NewsService {
     List<FeedDto> getAll();
 
     List<FeedDto> getNewsForUser(String username);
+
+    List<FeedData> getAllTechnicalFeeds();
 }

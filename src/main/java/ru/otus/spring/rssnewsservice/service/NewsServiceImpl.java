@@ -34,8 +34,8 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public void addFeedData(String name, String link) {
-        feedDataRepository.save(new FeedData(name, link));
+    public FeedData addFeedData(String name, String link) {
+        return feedDataRepository.save(new FeedData(name, link));
     }
 
     @Override
@@ -64,6 +64,11 @@ public class NewsServiceImpl implements NewsService {
         return user.getUserFeeds().stream()
                 .map(getFeedDataFeedDtoFunction())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FeedData> getAllTechnicalFeeds() {
+        return (List<FeedData>) feedDataRepository.findAll();
     }
 
     private Function<FeedData, FeedDto> getFeedDataFeedDtoFunction() {

@@ -26,9 +26,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-//                .authorizeRequests().antMatchers( "/news/custom").hasAnyRole("ADMIN", "USER")
-//                .and()
-                .authorizeRequests().antMatchers("/authors/**", "/genres/**").hasRole("ADMIN")
+                .authorizeRequests().antMatchers( "/news/custom").hasAnyRole("ADMIN", "USER")
+                .and()
+                .authorizeRequests().antMatchers("/news/editFeed",
+                "/news/addFeed", "/news/removeFeed/**" ,"/news/allFeeds").hasRole("ADMIN")
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
