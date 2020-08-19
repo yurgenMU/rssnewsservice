@@ -1,0 +1,39 @@
+version: '3'
+services:
+
+
+  mysql:
+    build:
+      context: .
+      dockerfile: mysql/Dockerfile
+    image: mysql
+    container_name: mysql-container
+    ports:
+      - "3306:3306"
+    networks:
+      - nw
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=rss_service
+      - JDBC_PARAMS="connectTimeout=30000"
+
+  news-service:
+    build:
+      context: ""
+      dockerfile: news-service/Dockerfile
+    privileged: true
+    ports:
+      - "8080:8080"
+    networks:
+      - nw
+    depends_on:
+      - mysql
+    command: java -jar /app/app.jar
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/rss_service?serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+networks:
+  nw:

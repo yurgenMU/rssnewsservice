@@ -21,7 +21,12 @@ Vue.component("FeedManagerComponent", {
 
         loadFeedsTechnicalData: function () {
             let accessToken = Window.SERVICE_UTILS.getJwtObject();
-            let config = {};
+            let config = {
+                headers: {
+                    Authorization: 'Bearer ' + accessToken
+                },
+                withCredentials: true
+            };
             let that = this;
             if (accessToken) {
                 axios.get('/news/allFeeds', config)

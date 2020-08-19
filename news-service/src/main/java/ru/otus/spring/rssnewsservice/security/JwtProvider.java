@@ -3,8 +3,10 @@ package ru.otus.spring.rssnewsservice.security;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.otus.spring.rssnewsservice.config.JwtPropertiesConfig;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -14,21 +16,21 @@ import java.util.Date;
 public class JwtProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtProvider.class);
 
-    @Value("$(jwt.secret)")
-    private String jwtSecret;
+    @Autowired
+    private JwtPropertiesConfig jwtPropertiesConfig;
 
     public String generateToken(String login) {
         Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());
         return Jwts.builder()
                 .setSubject(login)
                 .setExpiration(date)
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .signWith(SignatureAlgorithm.HS512, jwtPropertiesConfig.getSecret())
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(jwtPropertiesConfig.getSecret()).parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException expEx) {
             LOGGER.error("Token expired");
@@ -45,7 +47,7 @@ public class JwtProvider {
     }
 
     public String retrieveLoginFromToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parser().setSigningKey(jwtPropertiesConfig.getSecret()).parseClaimsJws(token).getBody();
         return claims.getSubject();
     }
 }

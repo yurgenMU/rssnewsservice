@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS rss_service.users
     ID       BIGINT PRIMARY KEY AUTO_INCREMENT,
     USERNAME VARCHAR(255) UNIQUE,
     PASSWORD VARCHAR(255),
-    DATE     TIMESTAMP
+    DATE     TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS rss_service.users_authorities
@@ -33,7 +33,7 @@ CREATE TABLE rss_service.users_feeds
     user_id BIGINT NOT NULL REFERENCES rss_service.users (id),
     feed_id BIGINT NOT NULL REFERENCES rss_service.rss_feeds (id),
     UNIQUE (user_id, feed_id)
-)
+);
 
 
 
