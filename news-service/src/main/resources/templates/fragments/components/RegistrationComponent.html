@@ -1,0 +1,42 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="registration-component">
+    <script type="text/x-template" id="registration-template">
+        <div class="news-service-registration">
+            <div class="news-service-registration__container">
+                <div class="news-service-login__title">
+                    <span>Register</span>
+                </div>
+                <div class="news-service-login__form">
+                    <div class="news-service-registration__form-input">
+                        <input id="login"
+                               placeholder="Login"
+                               type="text"
+                               @click="userExists=false"
+                               aria-label="Login field"
+                               v-model.trim="login">
+                    </div>
+                    <div class="news-service-registration__form-input">
+                        <input id="password"
+                               placeholder="Password"
+                               type="password"
+                               aria-label="Password field"
+                               v-model.trim="password"
+                               v-on:keyup.enter="register">
+                    </div>
+                    <div class="warning-container">
+                        <span v-show="userExists" class="news-service-registration__warning">Error! User with this login already exists</span>
+                    </div>
+                    <div class="news-service-registration__form-action">
+                        <button class="news-service-registration__btn"
+                                type="submit"
+                                aria-label="Sign in"
+                                @click="register">Register
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>
+
+</html>

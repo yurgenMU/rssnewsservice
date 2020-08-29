@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="fragments/libraries-fragment::libraries"></div>
+<div th:insert="fragments/components/RegistrationComponent::registration-component"></div>
+<div th:insert="fragments/components/LoginComponent::login-component"></div>
+<div th:insert="fragments/components/NewsComponent::news-component"></div>
+<div th:insert="fragments/components/AccordionComponent::accordion-component"></div>
+<div th:insert="fragments/components/EditUserFeedsComponent::edit-user-feeds"></div>
+<div th:insert="fragments/components/ModalDialog::modal-dialog-component"></div>
+<div th:insert="fragments/components/FeedsManager::feed-manager"></div>
+<div th:insert="fragments/components/EditFeedTemplate::edit-feed"></div>
+<div th:insert="fragments/components/NewFeedTemplate::new-feed"></div>
+<div th:insert="fragments/components/TechnicalFeedComponent::technical-feed"></div>
+<div id="news-app">
+    <div class="news-service-header news-service-header_black">
+        <div class="news-service-header__items">
+            <div class="news-service-header__navigation-tabs">
+                <div class="news-service-header__item">
+                                    <router-link class="news-service-header__title" to="/news">News</router-link>
+                </div>
+                <div v-if="isLoggedIn" class="news-service-header__item">
+                    <router-link class="news-service-header__title" to="/customize">Customize</router-link>
+                </div>
+                <div v-if="isLoggedIn" class="news-service-header__item">
+                    <router-link class="news-service-header__title" to="/manageFeeds">Manage Feeds</router-link>
+                </div>
+            </div>
+            <div class="news-service-header__menu-tabs">
+                <div v-if="!isLoggedIn" class="news-service-header__item">
+                                    <router-link class="news-service-header__btn" to="/registration">Register</router-link>
+                </div>
+                <div v-if="!isLoggedIn" class="news-service-header__item">
+                                    <router-link class="news-service-header__btn" to="/login">Login</router-link>
+                </div>
+                <div class="user-section">
+                    <div v-if="isLoggedIn" class="news-service-header__item">
+                        <span>{{username}}</span>
+                        <button class="news-service-header__btn" @click="logout">logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="route-container" style="min-height: 810px;">
+        <router-view></router-view>
+    </div>
+</div>
+
+
+</body>
+</html>

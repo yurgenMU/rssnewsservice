@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="modal-dialog-component">
+    <script type="text/x-template" id="modal_dialog-template">
+        <div class="modal-window__wrapper-data">
+        <span class="btn_modal-trigger" @click="showModalDialog" v-if="hasButtonSlot">
+            <slot name="dialog-button">Show modal dialog</slot>
+        </span>
+            <div class="modal-window" :class="{'modal-window_visible': shown}">
+                <div class="modal-window__wrapper" :style="wrapperStyle">
+                    <header class="modal-window__header">
+                        <slot name="dialog-header">
+                            <h4 class="modal-window__title">Header</h4>
+                        </slot>
+                        <p v-if="hasSubtitleSlot" class="modal-window__subtitle">
+                            <slot name="dialog-subtitle"></slot>
+                        </p>
+                    </header>
+                    <slot name="dialog-body"></slot>
+                    <footer v-if="hasFooterSlot" class="modal-window__footer">
+                        <slot name="dialog-footer"></slot>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="feed-manager">
+    <script type="text/x-template" id="feed-manager-template">
+        <div>
+            <add-feed-component :add-to-feeds="addToFeeds"></add-feed-component>
+            <div v-for="feed in allFeeds" class="news-service-feed">
+
+                <technical-feed-component :feed="feed" :remove-function="removeFeed"></technical-feed-component>
+
+            </div>
+        </div>
+    </script>
+</div>
+</html>
