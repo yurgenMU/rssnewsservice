@@ -1,7 +1,7 @@
 Window.SERVICE_UTILS = {
 
     getChosenFeedsForUser: function (context, config, afterLoadCallback) {
-        axios.get('/news/custom', config)
+        axios.get('/api/v1/news/custom', config)
             .then(customFeedResponse => {
                 if (customFeedResponse.status === 200) {
                     let chosenFeeds = customFeedResponse.data;

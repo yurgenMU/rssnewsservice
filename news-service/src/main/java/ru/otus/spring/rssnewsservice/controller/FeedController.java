@@ -23,39 +23,39 @@ public class FeedController {
         this.newsService = newsService;
     }
 
-    @GetMapping("/news/all")
-    public List<FeedDto> getAllFeeds()  {
-        return newsService.getAll();
+    @GetMapping("/api/v1/news/all")
+    public ResponseEntity<List<FeedDto>> getAllFeeds() {
+        return ResponseEntity.ok(newsService.getAll());
     }
 
-    @GetMapping("/news/custom")
-    public List<FeedDto> getFeedForUser(Principal principal) throws IOException, FeedException {
+    @GetMapping("/api/v1/news/custom")
+    public ResponseEntity<List<FeedDto>> getFeedForUser(Principal principal) {
         if (isNull(principal)) {
-            return newsService.getAll();
+            return ResponseEntity.ok(newsService.getAll());
         }
         String username = principal.getName();
-        return newsService.getNewsForUser(username);
+        return ResponseEntity.ok(newsService.getNewsForUser(username));
     }
 
-    @PostMapping("/news/addFeed")
-    public FeedData addFeed(@RequestBody FeedData feedData) {
-        return newsService.addFeedData(feedData.getName(), feedData.getLink());
+    @PostMapping("/api/v1/news/addFeed")
+    public ResponseEntity<FeedData> addFeed(@RequestBody FeedData feedData) {
+        return ResponseEntity.ok(newsService.addFeedData(feedData.getName(), feedData.getLink()));
     }
 
-    @PostMapping("/news/editFeed")
-    public ResponseEntity editFeed(@RequestBody FeedData feedData) {
+    @PutMapping("/api/v1/news/editFeed")
+    public ResponseEntity<?> editFeed(@RequestBody FeedData feedData) {
         newsService.updateFeedData(feedData.getId(), feedData.getName(), feedData.getLink());
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/news/removeFeed/{feedId}")
-    public ResponseEntity deleteFeed(@PathVariable ("feedId") Long feedId) {
+    @DeleteMapping("/api/v1/news/removeFeed/{feedId}")
+    public ResponseEntity<?> deleteFeed(@PathVariable("feedId") Long feedId) {
         newsService.removeFeedData(feedId);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/news/allFeeds")
-    public List<FeedData> getTechnicalFeeds() throws IOException, FeedException {
-        return newsService.getAllTechnicalFeeds();
+    @GetMapping("/api/v1/news/allFeeds")
+    public ResponseEntity<List<FeedData>> getTechnicalFeeds() {
+        return ResponseEntity.ok(newsService.getAllTechnicalFeeds());
     }
 }

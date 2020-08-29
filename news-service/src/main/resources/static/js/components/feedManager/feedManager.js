@@ -29,7 +29,7 @@ Vue.component("FeedManagerComponent", {
             };
             let that = this;
             if (accessToken) {
-                axios.get('/news/allFeeds', config)
+                axios.get('/api/v1/news/allFeeds', config)
                     .then(response => {
                         if (response.status === 200) {
                             this.allFeeds = response.data;
@@ -53,7 +53,7 @@ Vue.component("FeedManagerComponent", {
                 withCredentials: true
             };
             let that = this;
-            axios.post('/news/addFeed', newFeed, config)
+            axios.post('/api/v1/news/addFeed', newFeed, config)
                 .then(response => {
                     if (response.status === 200) {
                         that.allFeeds.push(newFeed);
@@ -75,8 +75,8 @@ Vue.component("FeedManagerComponent", {
                 withCredentials: true
             };
             let that = this;
-            let url = '/news/removeFeed/' + feedToRemove.id;
-            axios.get(url, config)
+            let url = '/api/v1/news/removeFeed/' + feedToRemove.id;
+            axios.delete(url, config)
                 .then(response => {
                     if (response.status === 200) {
                         that.allFeeds = that.allFeeds.filter(feed => feed !== feedToRemove);

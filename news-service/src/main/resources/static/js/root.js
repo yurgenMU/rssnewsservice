@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 let accessToken = Window.SERVICE_UTILS.getJwtObject();
                 let config = {};
                 let that = this;
-                axios.get('/news/all', config)
+                axios.get('/api/v1/news/all', config)
                     .then(response => {
                         if (response.status === 200) {
 

@@ -30,7 +30,7 @@ Vue.component("EditFeedComponent", {
                 name: name,
                 link: link
             };
-            axios.post('/news/editFeed', newFeed, config)
+            axios.put('/api/v1/news/editFeed', newFeed, config)
                 .then(response => {
                     if (response.status === 200) {
                         that.$emit('update:sourceFeed', newFeed);

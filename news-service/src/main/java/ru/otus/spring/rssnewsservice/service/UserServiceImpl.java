@@ -2,6 +2,7 @@ package ru.otus.spring.rssnewsservice.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.rssnewsservice.domain.feed.FeedData;
 import ru.otus.spring.rssnewsservice.domain.user.Authority;
 import ru.otus.spring.rssnewsservice.domain.user.AuthorityType;
@@ -33,6 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User saveUser(String login, String password) {
         return userRepository.save(new User()
                 .setUsername(login)
@@ -41,6 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User updateUser(String login, List<Long> feeds) {
         List<FeedData> feedsFound = feeds.stream()
                 .map(feedDataRepository::findById)

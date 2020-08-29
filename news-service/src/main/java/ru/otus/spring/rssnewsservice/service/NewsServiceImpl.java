@@ -2,6 +2,7 @@ package ru.otus.spring.rssnewsservice.service;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.rssnewsservice.domain.feed.FeedData;
 import ru.otus.spring.rssnewsservice.domain.feed.FeedDto;
 import ru.otus.spring.rssnewsservice.domain.user.User;
@@ -28,36 +29,42 @@ public class NewsServiceImpl implements NewsService {
 
 
     @Override
+    @Transactional
     public FeedData getFeedById(Long id) {
         return feedDataRepository.findById(id)
                 .orElseThrow(() -> new FeedDataNotFoundException("Feed data with this identifier not found"));
     }
 
     @Override
+    @Transactional
     public FeedData addFeedData(String name, String link) {
         return feedDataRepository.save(new FeedData(name, link));
     }
 
     @Override
+    @Transactional
     public void updateFeedData(Long id, String name, String link) {
         feedDataRepository.findById(id)
                 .ifPresent(feedDataFound -> feedDataRepository.save(new FeedData(name, link).setId(feedDataFound.getId())));
     }
 
     @Override
+    @Transactional
     public void removeFeedData(Long id) {
         feedDataRepository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public List<FeedDto> getAll() {
-        List<FeedData> allFeedData = (List<FeedData>) feedDataRepository.findAll();
+        List<FeedData> allFeedData = feedDataRepository.findAll();
         return allFeedData.stream()
                 .map(getFeedDataFeedDtoFunction())
                 .collect(Collectors.toList());
     }
 
     @Override
+    @Transactional
     public List<FeedDto> getNewsForUser(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
@@ -67,8 +74,9 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    @Transactional
     public List<FeedData> getAllTechnicalFeeds() {
-        return (List<FeedData>) feedDataRepository.findAll();
+        return feedDataRepository.findAll();
     }
 
     private Function<FeedData, FeedDto> getFeedDataFeedDtoFunction() {

@@ -111,7 +111,7 @@ Vue.component("EditUserFeedsComponent", {
             };
             let that = this;
             let feeds = that.selectedFeeds.map(feed => feed.origin);
-            axios.post('/news/editUserFeeds', feeds, config)
+            axios.put('/api/v1/news/editUserFeeds', feeds, config)
                 .then(response => {
                     if (response.status === 200) {
                         that.chosenFeeds = that.selectedFeeds.length === 0 ? that.allFeeds : that.selectedFeeds;

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.spring.rssnewsservice.domain.feed.FeedDto;
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerNewUser(@RequestBody UserRequest registrationRequest) {
+    public ResponseEntity<?> registerNewUser(@RequestBody UserRequest registrationRequest) {
         String login = registrationRequest.getLogin();
         String password = registrationRequest.getPassword();
 
@@ -55,7 +56,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity authenticateUser(@RequestBody UserRequest authenticationRequest) {
+    public ResponseEntity<?> authenticateUser(@RequestBody UserRequest authenticationRequest) {
         String login = authenticationRequest.getLogin();
         String password = authenticationRequest.getPassword();
 
@@ -67,8 +68,8 @@ public class UserController {
         return getResponseEntityForSuccess(login);
     }
 
-    @PostMapping("/news/editUserFeeds")
-    public ResponseEntity editFeedForUser(Principal principal, @RequestBody List<FeedDto> feeds) throws IOException, FeedException {
+    @PutMapping("/api/v1/news/editUserFeeds")
+    public ResponseEntity<?> editFeedForUser(Principal principal, @RequestBody List<FeedDto> feeds) throws IOException, FeedException {
 
         String name = principal.getName();
         List<Long> feedIds = feeds.stream().map(FeedDto::getId).collect(Collectors.toList());
