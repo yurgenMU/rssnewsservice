@@ -1,9 +1,15 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/rss_service?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306?serverTimezone=UTC
     username: root
     password: root
     driverClassName: com.mysql.jdbc.Driver
+    initialization-mode: always
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
 
 
 jwt:

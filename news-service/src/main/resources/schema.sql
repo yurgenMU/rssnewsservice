@@ -21,14 +21,14 @@ CREATE TABLE IF NOT EXISTS rss_service.users_authorities
     UNIQUE (USER_ID, AUTHORITY_ID)
 );
 
-CREATE TABLE rss_service.rss_feeds
+CREATE TABLE IF NOT EXISTS rss_service.rss_feeds
 (
     id   BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     name VARCHAR(100)          NOT NULL,
     link VARCHAR(1000)         NOT NULL
 );
 
-CREATE TABLE rss_service.users_feeds
+CREATE TABLE IF NOT EXISTS rss_service.users_feeds
 (
     user_id BIGINT NOT NULL REFERENCES rss_service.users (id),
     feed_id BIGINT NOT NULL REFERENCES rss_service.rss_feeds (id),
